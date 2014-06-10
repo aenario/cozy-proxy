@@ -9,8 +9,7 @@ class Router
     routes: {}
 
     constructor: ->
-        homePort = process.env.DEFAULT_REDIRECT_PORT
-        @client = new Client "http://localhost:#{homePort}/"
+        @client = new Client process.env.HOME_URL
 
     getRoutes: -> return @routes
 

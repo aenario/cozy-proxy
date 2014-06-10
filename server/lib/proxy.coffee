@@ -53,12 +53,14 @@ module.exports.initializeProxy = (app, server) ->
                         req.url = req.url.replace "/public/#{slug}", '/public'
 
                     routes = router.getRoutes()
-                    port = routes[slug].port
+                    req.headers['x-cozy-slug'] = slug
+                    url = process.env.DOCKPROXY_URL
                 else
-                    port = process.env.DEFAULT_REDIRECT_PORT
+                    req.headers['x-cozy-slug'] = 'HOME'
+                    url = process.env.HOME_URL
 
                 proxy.ws req, socket, head,
-                    target: "ws://localhost:#{port}"
+                    target: url
                     ws: true
             else
                 logger.error err if err?

@@ -1,7 +1,7 @@
 deviceManager = require '../models/device'
 request = require('request-json')
 exec = require('child_process').exec
-controllerClient = request.newClient('http://localhost:9002')
+controllerClient = request.newClient(process.env.CONTROLLER_URL)
 
 # helper functions
 extractCredentials = (header) ->
@@ -9,10 +9,10 @@ extractCredentials = (header) ->
         authDevice = header.replace 'Basic ', ''
         authDevice = new Buffer(authDevice, 'base64').toString 'ascii'
         return authDevice.split ':'
-    else        
+    else
         return ["", ""]
 
-recoverDiskSpace = (cb)-> 
+recoverDiskSpace = (cb)->
     exec 'df -h', (err, rawDiskSpace) ->
         if err
             cb "Error while retrieving disk space -- #{err}"
@@ -66,7 +66,7 @@ module.exports.getSpace = (req, res, next) =>
                         res.send 200, diskSpace: body
             else
                 res.send 200, diskSpace: body
-    else            
+    else
         error = new Error "Request unauthorized"
         error.status = 401
         next error

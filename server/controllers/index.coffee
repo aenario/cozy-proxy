@@ -3,8 +3,7 @@ router = require '../lib/router'
 statusChecker = require '../lib/status_checker'
 
 module.exports.defaultRedirect = (req, res) ->
-    homePort = process.env.DEFAULT_REDIRECT_PORT
-    getProxy().web req, res, target: "http://localhost:#{homePort}"
+    getProxy().web req, res, target: process.env.HOME_URL
 
 module.exports.showRoutes = (req, res) -> res.send 200, router.getRoutes()
 

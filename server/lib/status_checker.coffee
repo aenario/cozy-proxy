@@ -4,11 +4,11 @@ JsonClient = require('request-json').JsonClient
 User = require '../models/user'
 
 couchUrl = process.env.COUCH_URL
-controllerUrl = "http://localhost:9002/"
+controllerUrl = process.env.CONTROLLER_URL
 dataSystemUrl = process.env.DATASYSTEM_URL
-indexerUrl = "http://localhost:9102/"
+indexerUrl = process.env.INDEXER_URL
 homeUrl = process.env.HOME_URL
-proxyUrl = "http://localhost:9104/"
+proxyUrl = process.env.DOCKPROXY_URL
 
 # Class used to check the state of the main modules of the Cozy.
 class StatusChecker

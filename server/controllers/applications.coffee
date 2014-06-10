@@ -15,7 +15,8 @@ module.exports.app = (req, res, next) ->
                 params: polyglot: localization.getPolyglot()
             next error
         else
-            getProxy().web req, res, target: "http://localhost:#{port}"
+            req.headers['x-cozy-slug'] = appName
+            getProxy().web req, res, target: process.env.DOCKPROXY_URL
 
 module.exports.publicApp = (req, res, next) ->
     appName = req.params.name
@@ -32,6 +33,7 @@ module.exports.publicApp = (req, res, next) ->
                 params: polyglot: localization.getPolyglot()
             next error
         else
-            getProxy().web req, res, target: "http://localhost:#{port}"
+            req.headers['x-cozy-slug'] = appName
+            getProxy().web req, res, target: process.env.DOCKPROXY_URL
 
 module.exports.appWithSlash = (req, res) -> res.redirect "#{req.url}/"

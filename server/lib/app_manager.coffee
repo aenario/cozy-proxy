@@ -8,8 +8,7 @@ class AppManager
     isStarting: []
 
     constructor: ->
-        homePort = process.env.DEFAULT_REDIRECT_PORT
-        @client = new Client "http://localhost:#{homePort}/"
+        @client = new Client process.env.HOME_URL
         @router = require './router'
 
     # check if an application's state, start the app if requested
