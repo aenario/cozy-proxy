@@ -8,7 +8,8 @@ class AppManager
     isStarting: []
 
     constructor: ->
-        @client = new Client process.env.HOME_URL
+        @client = new Client process.env.DOCKPROXY
+        @client.headers['x-cozy-slug'] = 'HOME'
         @router = require './router'
 
     # check if an application's state, start the app if requested
@@ -44,18 +45,18 @@ class AppManager
         logger.info "Starting app #{slug}"
         @client.post "api/applications/#{slug}/start", {}, (err, res, data) =>
 
-            err = err or data.msg if data.error
+                err = err or data.msg if data.error
 
-            if err? or res.statusCode isnt 200
-                msg = "An error occurred while starting the app #{slug}"
-                logger.error "#{msg} -- #{err}"
-                callback err
-            else
-                logger.info "App #{slug} successfully started."
-                routes = @router.getRoutes()
-                routes[slug] =
-                    port: data.app.port
-                    state: data.app.state
-                callback null, data.app.port
+                if err? or res.statusCode isnt 200
+                    msg = "An error occurred while starting the app #{slug}"
+                    logger.error "#{msg} -- #{err}"
+                    callback err
+                else
+                    logger.info "App #{slug} successfully started."
+                    routes = @router.getRoutes()
+                    routes[slug] =
+                        port: data.app.port
+                        state: data.app.state
+                    callback null, data.app.port
 
 module.exports = new AppManager()

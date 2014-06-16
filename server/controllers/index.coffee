@@ -3,7 +3,8 @@ router = require '../lib/router'
 statusChecker = require '../lib/status_checker'
 
 module.exports.defaultRedirect = (req, res) ->
-    getProxy().web req, res, target: process.env.HOME_URL
+    req.headers['x-cozy-slug'] = 'HOME'
+    getProxy().web req, res, target: process.env.DOCKPROXY_URL
 
 module.exports.showRoutes = (req, res) -> res.send 200, router.getRoutes()
 

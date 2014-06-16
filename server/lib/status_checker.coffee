@@ -7,7 +7,7 @@ couchUrl = process.env.COUCH_URL
 controllerUrl = process.env.CONTROLLER_URL
 dataSystemUrl = process.env.DATASYSTEM_URL
 indexerUrl = process.env.INDEXER_URL
-homeUrl = process.env.HOME_URL
+# homeUrl = process.env.HOME_URL
 proxyUrl = process.env.DOCKPROXY_URL
 
 # Class used to check the state of the main modules of the Cozy.
@@ -38,7 +38,7 @@ class StatusChecker
             @getChecker "controller", controllerUrl, "version"
             @getChecker "datasystem", dataSystemUrl
             @getChecker "indexer", indexerUrl
-            @getChecker "home", homeUrl
+            # @getChecker "home", homeUrl
             @getChecker "proxy", proxyUrl, "routes"
         ], =>
             User.first (err, user) =>

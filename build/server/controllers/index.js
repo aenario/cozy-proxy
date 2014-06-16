@@ -8,10 +8,8 @@ router = require('../lib/router');
 statusChecker = require('../lib/status_checker');
 
 module.exports.defaultRedirect = function(req, res) {
-  var homePort;
-  homePort = process.env.DEFAULT_REDIRECT_PORT;
   return getProxy().web(req, res, {
-    target: "http://localhost:" + homePort
+    target: process.env.HOME_URL
   });
 };
 

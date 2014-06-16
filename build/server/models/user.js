@@ -10,7 +10,7 @@ helpers = require('../lib/helpers');
 
 timezones = require('../lib/timezones');
 
-client = new Client("http://localhost:9101/");
+client = new Client(process.env.DATASYSTEM_URL);
 
 if ((_ref = process.env.NODE_ENV) === 'production' || _ref === 'test') {
   client.setBasicAuth(process.env.NAME, process.env.TOKEN);

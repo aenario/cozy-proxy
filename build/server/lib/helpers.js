@@ -33,7 +33,7 @@ module.exports.sendResetEmail = function(instance, user, key, callback) {
       key: key
     })
   };
-  client = new Client("http://localhost:9101/");
+  client = new Client(process.env.DATASYSTEM_URL);
   if (process.env.NODE_ENV === "production") {
     client.setBasicAuth(process.env.NAME, process.env.TOKEN);
   }

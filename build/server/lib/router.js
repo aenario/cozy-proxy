@@ -14,9 +14,7 @@ Router = (function() {
   Router.prototype.routes = {};
 
   function Router() {
-    var homePort;
-    homePort = process.env.DEFAULT_REDIRECT_PORT;
-    this.client = new Client("http://localhost:" + homePort + "/");
+    this.client = new Client(process.env.HOME_URL);
   }
 
   Router.prototype.getRoutes = function() {

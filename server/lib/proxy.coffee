@@ -57,7 +57,7 @@ module.exports.initializeProxy = (app, server) ->
                     url = process.env.DOCKPROXY_URL
                 else
                     req.headers['x-cozy-slug'] = 'HOME'
-                    url = process.env.HOME_URL
+                    url = process.env.DOCKPROXY_URL
 
                 proxy.ws req, socket, head,
                     target: url

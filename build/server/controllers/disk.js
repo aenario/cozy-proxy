@@ -7,7 +7,7 @@ request = require('request-json');
 
 exec = require('child_process').exec;
 
-controllerClient = request.newClient('http://localhost:9002');
+controllerClient = request.newClient(process.env.CONTROLLER_URL);
 
 extractCredentials = function(header) {
   var authDevice;

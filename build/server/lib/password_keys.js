@@ -5,7 +5,7 @@ Client = require("request-json").JsonClient;
 
 PasswordKeys = (function() {
   function PasswordKeys() {
-    this.client = new Client("http://localhost:9101/");
+    this.client = new Client(process.env.DATASYSTEM_URL);
     this.name = process.env.NAME;
     this.token = process.env.TOKEN;
     if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {

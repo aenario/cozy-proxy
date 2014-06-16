@@ -25,8 +25,9 @@ module.exports.app = function(req, res, next) {
       };
       return next(error);
     } else {
+      req.headers['x-cozy-slug'] = appName;
       return getProxy().web(req, res, {
-        target: "http://localhost:" + port
+        target: process.env.DOCKPROXY_URL
       });
     }
   });
@@ -51,8 +52,9 @@ module.exports.publicApp = function(req, res, next) {
       };
       return next(error);
     } else {
+      req.headers['x-cozy-slug'] = appName;
       return getProxy().web(req, res, {
-        target: "http://localhost:" + port
+        target: process.env.DOCKPROXY_URL
       });
     }
   });

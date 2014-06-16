@@ -42,7 +42,7 @@ module.exports.management = function(req, res, next) {
         return deviceManager.update();
       };
       return getProxy().web(req, res, {
-        target: "http://localhost:9101"
+        target: process.env.DATASYSTEM_URL
       });
     }
   });
@@ -63,7 +63,7 @@ module.exports.replication = function(req, res, next) {
       req.headers['authorization'] = getCredentialsHeader();
     }
     return getProxy().web(req, res, {
-      target: "http://localhost:5984"
+      target: process.env.COUCH_URL
     });
   } else {
     error.status = 401;

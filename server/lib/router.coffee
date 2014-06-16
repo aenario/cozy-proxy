@@ -9,7 +9,8 @@ class Router
     routes: {}
 
     constructor: ->
-        @client = new Client process.env.HOME_URL
+        @client = new Client process.env.DOCKPROXY_URL
+        @client.headers['x-cozy-slug'] = 'HOME'
 
     getRoutes: -> return @routes
 

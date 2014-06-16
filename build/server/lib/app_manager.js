@@ -12,9 +12,7 @@ AppManager = (function() {
   AppManager.prototype.isStarting = [];
 
   function AppManager() {
-    var homePort;
-    homePort = process.env.DEFAULT_REDIRECT_PORT;
-    this.client = new Client("http://localhost:" + homePort + "/");
+    this.client = new Client(process.env.HOME_URL);
     this.router = require('./router');
   }
 
