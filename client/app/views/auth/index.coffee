@@ -24,36 +24,30 @@ module.exports = class AuthView extends Mn.LayoutView
 
 
     serializeData: ->
-        data =
-            username: window.username
-            prefix:   @options.type
+        username: window.username
+        prefix:   @options.type
 
 
-    initialize: (options) ->
+    initialize: () ->
         @options.next   ?= '/'
-        @options.forgot = @options.type is 'login'
 
-        password = @$el.asEventStream 'focus keyup blur', @ui.passwd
-                        .map (event) -> event.target.value
-                        .toProperty('')
-        @passwordEntered = password.map (value) -> !!value
+        @password = @ui.passwd.asEventStream 'focus keyup blur'
+                    .map getEventTargetValue
+                    .toProperty('')
 
-        submit = @$el.asEventStream 'click', @ui.submit
+        form = @$el.asEventStream 'click', @ui.submit
             .doAction '.preventDefault'
-            .filter @passwordEntered
+            .filter @password.map notEmpty
+            .map @password
+            .map (password) =>
+                password: password
+                action:   @options.backend
 
-        formTpl =
-            password: password
-            action:   @options.backend
-        form = Bacon.combineTemplate formTpl
-            .sampledBy submit
 
-        @model.isBusy.plug form.map true
-        @model.signin.plug form
-
+        form.onValue @model.signinSubmit
 
     onRender: ->
-        @passwordEntered.not()
+        @passwd.map isEmpty
             .assign @ui.submit, 'attr', 'aria-disabled'
 
         @ui.passwd.asEventStream 'focus'
@@ -74,7 +68,7 @@ module.exports = class AuthView extends Mn.LayoutView
             .assign @ui.submit, 'html'
 
         @showChildView 'feedback', new FeedbackView
-            forgot: @options.forgot
+            forgot: @options.type is 'login'
             prefix: @options.type
             model:  @model
 

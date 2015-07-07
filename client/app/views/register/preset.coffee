@@ -17,8 +17,7 @@ module.exports = class RegisterPresetView extends Mn.ItemView
 
 
     serializeData: ->
-        res =
-            timezones: require 'lib/timezones'
+        timezones: require 'lib/timezones'
 
 
     initialize: ->

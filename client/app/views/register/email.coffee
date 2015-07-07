@@ -39,9 +39,8 @@ module.exports = class RegisterEmailView extends Mn.ItemView
 
         @model.get('email').assign @ui.email, 'val'
 
-        @ui.ssl.asEventStream 'change'
-               .map (event) -> if event.target.checked then 993 else 143
-               .assign @ui.port, 'val'
+        @ui.ssl.on 'change', (event) ->
+            @ui.port.val if event.target.checked then 993 else 143
 
         # required inputs interactions
         requiredInputs = getPropertiesFromEls @ui.required

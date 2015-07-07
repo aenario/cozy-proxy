@@ -7,21 +7,20 @@ module.exports = class Auth extends StateModel
         @alert     = new Bacon.Bus()
         @recover   = new Bacon.Bus()
         @isBusy    = new Bacon.Bus()
-        @signin    = new Bacon.Bus()
         @success   = new Bacon.Bus()
         @sendReset = new Bacon.Bus()
 
         @add 'alert', @alert.toProperty()
         @add 'recover', @recover.startWith(false).toProperty()
 
-        @signin.onValue @signinSubmit
         @sendReset.onValue @sendResetSubmit
 
 
     signinSubmit: (form) =>
+        @isBusy.push true
+
         data = JSON.stringify password: form.password
         req = Bacon.fromPromise $.post form.action, data
-
         @isBusy.plug req.mapEnd false
 
         @alert.plug req.mapError
