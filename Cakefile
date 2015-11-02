@@ -172,7 +172,9 @@ task 'build', 'Build CoffeeScript to Javascript', ->
     exec command, (err, stdout, stderr) ->
         if err
             logger.error "An error has occurred while compiling:\n" + err
-            process.exit 1
+            console.log stdout
+            console.log stderr
+            setTimeout -> process.exit 1, 1000
         else
             buildJsInLocales()
             commonJSJade()
