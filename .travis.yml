@@ -35,6 +35,11 @@ before_install:
     - sleep 5
     - curl http://localhost:9101/
     - cd ..
+    - cd client
+    - npm install
+    - cd ..
+    - npm install
+    - npm run build:server
     - export NAME=proxy
     - export TOKEN=token
 

@@ -49,6 +49,9 @@
   "main": "server.js",
   "scripts": {
     "test": "cake --use-js tests",
-    "start": "node build/server.js"
+    "start": "node build/server.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd client && brunch b",
+    "build:server": "cake build"
   }
 }
